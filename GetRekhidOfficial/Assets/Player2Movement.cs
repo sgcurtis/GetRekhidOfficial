@@ -13,6 +13,7 @@ public class Player2Movement : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        //player2Sprite.flipY = true;
         player2 = GetComponent<Rigidbody2D>();
         player2.drag = friction;
 
