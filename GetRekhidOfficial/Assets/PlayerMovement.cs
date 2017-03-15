@@ -3,34 +3,48 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-	public float accel;	
+	public float speed;	
     public float friction;
+
+    float moveHorizontal = 0;
+    float moveVertical = 0;
 
     public bool kill = false;
 
-    private Rigidbody2D player1;
-    private SpriteRenderer player1Sprite;
+    private Rigidbody2D player;
+    private SpriteRenderer playerSprite;
 
     // Use this for initialization
     void Start () {
-        player1 = GetComponent<Rigidbody2D> ();
-        player1.drag = friction;
+        speed = 20;
+        friction = 1;
 
-        player1Sprite = GetComponent<SpriteRenderer>();
+        player = GetComponent<Rigidbody2D> ();
+        player.drag = friction;
+
+        playerSprite = GetComponent<SpriteRenderer>();
     }
 	
 	void FixedUpdate ()
     {
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
+        if (player.tag == "Player1")
+        {
+            moveHorizontal = Input.GetAxis("Horizontal");
+            moveVertical = Input.GetAxis("Vertical");
+        }
+        else if (player.tag == "Player2")
+        {
+            moveHorizontal = Input.GetAxis("Horizontal2");
+            moveVertical = Input.GetAxis("Vertical2");
+        }
 
-		Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
+        Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
 
-        player1.AddForce(movement * accel);
+        player.velocity = movement * speed;
 
         if (kill)
         {
-            player1Sprite.color = Color.red;
+            playerSprite.color = Color.red;
         }
     }
 

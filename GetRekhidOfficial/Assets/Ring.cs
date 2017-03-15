@@ -15,16 +15,17 @@ public class Ring : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player1")
+        col.gameObject.GetComponent<PlayerMovement>().killPlayer();
+        /*if (col.gameObject.tag == "Player1")
         {
             col.gameObject.GetComponent<PlayerMovement>().killPlayer();
-            Debug.Log("PLAYER1");
+            //Debug.Log("PLAYER1");
             
         }
         else if (col.gameObject.tag == "Player2")
         {
-            col.gameObject.GetComponent<Player2Movement>().killPlayer();
-            Debug.Log("PLAYER2");
-        }
+            col.gameObject.GetComponent<PlayerMovement>().killPlayer();
+            //Debug.Log("PLAYER2");
+        }*/
     }
 }
