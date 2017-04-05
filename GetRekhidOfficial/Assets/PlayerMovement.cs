@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool kill = false;
 
+
+
     private Rigidbody2D player1;
     private SpriteRenderer player1Sprite;
 
@@ -15,7 +17,8 @@ public class PlayerMovement : MonoBehaviour {
     void Start () {
         player1 = GetComponent<Rigidbody2D> ();
         player1.drag = friction;
-
+		player1.mass = 1;
+		player1.sharedMaterial.bounciness = 1;
         player1Sprite = GetComponent<SpriteRenderer>();
     }
 	
@@ -26,7 +29,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
 
-        player1.AddForce(movement * accel);
+		player1.AddForce(movement * accel * player1.mass);
 
         if (kill)
         {

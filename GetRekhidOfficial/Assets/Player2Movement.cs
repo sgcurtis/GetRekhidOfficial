@@ -15,7 +15,8 @@ public class Player2Movement : MonoBehaviour {
     void Start () {
         player2 = GetComponent<Rigidbody2D>();
         player2.drag = friction;
-
+		player2.mass = 1;
+		player2.sharedMaterial.bounciness = 1;
         player2Sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -26,7 +27,7 @@ public class Player2Movement : MonoBehaviour {
 
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
-        player2.AddForce(movement * accel);
+		player2.AddForce(movement * accel * player2.mass);
 
         if (kill)
         {
