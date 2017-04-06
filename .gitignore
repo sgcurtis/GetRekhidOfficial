@@ -30,3 +30,5 @@ sysinfo.txt
 *.unitypackage
 
 GetRekhidOfficial/Library/ScriptAssemblies/Assembly-CSharp.dll
+
+/Temp/UnityLockFile
