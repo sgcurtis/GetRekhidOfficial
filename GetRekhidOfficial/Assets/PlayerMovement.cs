@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     public Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
+    public Text winnerText;
 
     public float speed;	
     public float friction;
@@ -31,6 +32,8 @@ public class PlayerMovement : MonoBehaviour {
         keys.Add("P2 Down", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("P2 Down", "DownArrow")));
         keys.Add("P2 Left", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("P2 Left", "LeftArrow")));
         keys.Add("P2 Right", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("P2 Right", "RightArrow")));
+
+        winnerText.enabled = false;
 
         accel = 200;
         speed = 10;
@@ -112,5 +115,16 @@ public class PlayerMovement : MonoBehaviour {
     public void killPlayer()
     {
         kill = true;
+        if (player.tag == "Player1")
+        {
+            winnerText.text = "Ureel Wins!";
+        }
+        else if (player.tag == "Player2")
+        {
+            winnerText.text = "Kuhl Wins!";
+        }
+
+        winnerText.enabled = true;
+        Time.timeScale = 0;
     }
 }
