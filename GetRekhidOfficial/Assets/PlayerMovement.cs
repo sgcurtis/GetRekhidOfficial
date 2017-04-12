@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour {
     float moveVertical = 0;
 
     public bool kill = false;
+    public Text winnerText;
 
     private Rigidbody2D player;
     private SpriteRenderer playerSprite;
@@ -40,6 +41,8 @@ public class PlayerMovement : MonoBehaviour {
         player.drag = friction;
 
         playerSprite = GetComponent<SpriteRenderer>();
+
+        winnerText.text = "";
     }
 	
 	void FixedUpdate ()
@@ -105,7 +108,15 @@ public class PlayerMovement : MonoBehaviour {
 
         if (kill)
         {
-            playerSprite.color = Color.red;
+            Time.timeScale = 0;
+            if (player.tag == "Player1")
+            {
+                winnerText.text = "Ureel Wins!";
+            }
+            else if (player.tag == "Player2")
+            {
+                winnerText.text = "Kuhl Wins!";
+            }
         }
     }
 
