@@ -9,6 +9,7 @@ public class MainMenuScript : MonoBehaviour {
     public Canvas mainMenu;
     public Canvas quitMenu;
     public Canvas keybindMenu;
+    public Canvas HowTo;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +18,7 @@ public class MainMenuScript : MonoBehaviour {
         mainMenu.enabled = true;
         quitMenu.enabled = false;
         keybindMenu.enabled = false;
+        HowTo.enabled = false;
 
     }
 	
@@ -54,4 +56,15 @@ public class MainMenuScript : MonoBehaviour {
         keybindMenu.enabled = false;
     }
 
+    public void HowToPress()
+    {
+        mainMenu.enabled = false;
+        HowTo.enabled = true;
+    }
+
+    public void HowToExit()
+    {
+        mainMenu.enabled = true;
+        HowTo.enabled = false;
+    }
 }

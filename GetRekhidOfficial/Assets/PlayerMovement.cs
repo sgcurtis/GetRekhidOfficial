@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool kill = false;
     public Text winnerText;
+    public Canvas winnerBox;
 
     private Rigidbody2D player;
     private SpriteRenderer playerSprite;
@@ -42,6 +43,7 @@ public class PlayerMovement : MonoBehaviour {
 
         playerSprite = GetComponent<SpriteRenderer>();
 
+        winnerBox.enabled = false;
         winnerText.text = "";
     }
 	
@@ -108,6 +110,8 @@ public class PlayerMovement : MonoBehaviour {
 
         if (kill)
         {
+            winnerBox.enabled = true;
+
             Time.timeScale = 0;
             if (player.tag == "Player1")
             {
