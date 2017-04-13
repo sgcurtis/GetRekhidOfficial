@@ -16,20 +16,20 @@ public class StrengthPowerup : MonoBehaviour {
 		Player1C = Player1.GetComponent<Rigidbody2D> ();
 		Player2C = Player2.GetComponent<Rigidbody2D> ();
 		StrPwr = GameObject.Find ("StrengthPowerup");
+		Random.InitState ( System.DateTime.Now.Millisecond * 2);
 		despawn ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		spawnTimer += Time.deltaTime;
-		if (!Spawned && spawnTimer > 7) {
+		if (!Spawned && spawnTimer > 5) {
 			spawn ();
 		}
 		if (Spawned) {
-			int y = Random.Range ( 1, 10 );
-			int x = Random.Range ( 1, 10 );
-			StrPwr.GetComponent<Rigidbody2D>().AddForce(new Vector3(y, Mathf.Sin(x * Mathf.PI) / 2));
-			if (spawnTimer > 23) {
+			Random.InitState ( System.DateTime.Now.Millisecond * 2);
+			StrPwr.GetComponent<Rigidbody2D>().AddForce(new Vector3(1, Mathf.Sin(Random.value * Mathf.PI) / 2));
+			if (spawnTimer > 20) {
 				despawn ();
 			}
 		}
@@ -37,15 +37,13 @@ public class StrengthPowerup : MonoBehaviour {
 
 	void despawn() {
 		spawnTimer = 0;
-		Player2C.mass = 1;
-		Player1C.mass = 1;
 		Spawned = false;
 		StrPwr.transform.Translate (10000, -10000, 0, Space.World);
 	}
 
 	void spawn() {
-		int y = Random.Range ( -4, 4);
-		StrPwr.transform.position = new Vector3 (-15, y);
+		int y = (int) (Random.value * 2);
+		StrPwr.transform.position = new Vector3 (0, 0);
 		Player2.GetComponent<PlayerMovement> ().accel = 200;
 		Player1.GetComponent<PlayerMovement> ().accel = 200;
 		Spawned = true;

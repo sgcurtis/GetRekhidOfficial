@@ -16,6 +16,7 @@ public class SpeedPowerup : MonoBehaviour {
 		Player1C = Player1.GetComponent<Rigidbody2D> ();
 		Player2C = Player2.GetComponent<Rigidbody2D> ();
 		SpdPwr = GameObject.Find ("SpeedPowerup");
+		Random.InitState ( System.DateTime.Now.Millisecond);
 		despawn ();
 	}
 
@@ -27,8 +28,7 @@ public class SpeedPowerup : MonoBehaviour {
 		}
 		if (Spawned) {
 			int y = Random.Range ( 1, 256 );
-			int x = Random.Range ( 1, 256 );
-			SpdPwr.GetComponent<Rigidbody2D>().AddForce(new Vector3(Mathf.Sin(x % (2 * Mathf.PI)),y % 5));
+			SpdPwr.GetComponent<Rigidbody2D>().AddForce(new Vector3(Mathf.Sin(y % (2 * Mathf.PI)),y % 5));
 			if (spawnTimer > 20) {
 				despawn ();
 			}
@@ -42,8 +42,8 @@ public class SpeedPowerup : MonoBehaviour {
 	}
 
 	void spawn() {
-		int x = Random.Range ( -4, 4 );
-		SpdPwr.transform.position = new Vector3 (x, -8);
+		int y = (int) (Random.value * 2);
+		SpdPwr.transform.position = new Vector3 (3 * Mathf.Sqrt(y), -8);
 		Player2.GetComponent<PlayerMovement> ().accel = 200;
 		Player1.GetComponent<PlayerMovement> ().accel = 200;
 		Spawned = true;
