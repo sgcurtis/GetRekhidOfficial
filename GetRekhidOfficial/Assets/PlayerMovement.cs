@@ -22,6 +22,13 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D player;
     private SpriteRenderer playerSprite;
 
+
+    public AudioSource[] sounds;
+    public AudioSource pushSound;
+    public AudioSource dieSound;
+    public AudioSource kuhlWin;
+    public AudioSource kuhlLose;
+
     // Use this for initialization
     void Start () {
         keys.Add("P1 Up", (KeyCode)System.Enum.Parse(typeof(KeyCode),PlayerPrefs.GetString("P1 Up", "W")));
@@ -38,15 +45,34 @@ public class PlayerMovement : MonoBehaviour {
         speed = 10;
         friction = 20;
 
-        player = GetComponent<Rigidbody2D> ();
+        player = GetComponent<Rigidbody2D>();
         player.drag = friction;
 
         playerSprite = GetComponent<SpriteRenderer>();
 
         winnerBox.enabled = false;
         winnerText.text = "";
+
+        sounds = GetComponents<AudioSource>();
+
+        pushSound = sounds[0];
+        dieSound = sounds[1]; ;
+        kuhlWin = sounds[2]; ;
+        kuhlLose = sounds[3]; ;
     }
-	
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Player1" || col.gameObject.tag == "Player2")
+        {
+            pushSound.Play();
+        }
+        else if (col.gameObject.tag == "Ring")
+        {
+            dieSound.Play();
+        }
+    }
+
 	void FixedUpdate ()
     {
         if (player.tag == "Player1")
@@ -112,15 +138,18 @@ public class PlayerMovement : MonoBehaviour {
         {
             winnerBox.enabled = true;
 
-            Time.timeScale = 0;
+            
             if (player.tag == "Player1")
             {
+                kuhlLose.Play();
                 winnerText.text = "Ureel Wins!";
             }
             else if (player.tag == "Player2")
             {
+                kuhlWin.Play();
                 winnerText.text = "Kuhl Wins!";
             }
+            Time.timeScale = 0;
         }
     }
 
