@@ -22,6 +22,13 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D player;
     private SpriteRenderer playerSprite;
 
+    public AudioSource[] sounds;
+
+    public AudioSource pushSound;
+    public AudioSource dieSound;
+    public AudioSource endSound;
+    public AudioSource powerSound;
+
     // Use this for initialization
     void Start () {
         keys.Add("P1 Up", (KeyCode)System.Enum.Parse(typeof(KeyCode),PlayerPrefs.GetString("P1 Up", "W")));
@@ -45,9 +52,33 @@ public class PlayerMovement : MonoBehaviour {
 
         winnerBox.enabled = false;
         winnerText.text = "";
+
+        sounds = GetComponents<AudioSource>();
+        pushSound = sounds[0];
+        dieSound = sounds[1];
+        endSound = sounds[2];
+        powerSound = sounds[3];
+}
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Player1" || col.gameObject.tag == "Player2")
+        {
+            pushSound.Play();
+        }
+       
     }
-	
-	void FixedUpdate ()
+
+    void OnTriggerEnter2D(Collider2D collider2D)
+    {
+        if (collider2D.gameObject.tag == "Power")
+        {
+            powerSound.Play();
+        }
+    }
+
+
+    void FixedUpdate ()
     {
         if (player.tag == "Player1")
         {
@@ -111,7 +142,8 @@ public class PlayerMovement : MonoBehaviour {
         if (kill)
         {
             winnerBox.enabled = true;
-
+            dieSound.Play();
+            endSound.Play();
             Time.timeScale = 0;
             if (player.tag == "Player1")
             {
