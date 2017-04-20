@@ -9,6 +9,11 @@ public class PauseMenu : MonoBehaviour {
     public Canvas pauseMenu;
     public Canvas quitMenu;
 
+    public AudioSource[] sounds;
+
+    public AudioSource music;
+    public AudioSource talking;
+
     // Use this for initialization
     void Start()
     {
@@ -17,6 +22,11 @@ public class PauseMenu : MonoBehaviour {
         pauseMenu.enabled = false;
         quitMenu.enabled = false;
 
+        sounds = GetComponents<AudioSource>();
+        music = sounds[0];
+        talking = sounds[1];
+
+        music.Play();
     }
 
     void Update()
@@ -25,11 +35,15 @@ public class PauseMenu : MonoBehaviour {
         {
             if (!pauseMenu.enabled && !quitMenu.enabled)
             {
+                music.Pause();
+                talking.Play();
                 Time.timeScale = 0;
                 pauseMenu.enabled = true;
             }
             else
             {
+                talking.Pause();
+                music.Play();
                 Time.timeScale = 1;
                 pauseMenu.enabled = false;
                 quitMenu.enabled = false;
@@ -39,6 +53,8 @@ public class PauseMenu : MonoBehaviour {
 
     public void ResumeGame()
     {
+        talking.Pause();
+        music.Play();
         pauseMenu.enabled = false;
         Time.timeScale = 1;
     }

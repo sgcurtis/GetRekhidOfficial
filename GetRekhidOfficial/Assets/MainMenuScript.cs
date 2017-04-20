@@ -11,8 +11,12 @@ public class MainMenuScript : MonoBehaviour {
     public Canvas keybindMenu;
     public Canvas HowTo;
 
-	// Use this for initialization
-	void Start () {
+    public AudioSource[] sounds;
+
+    public AudioSource talking;
+
+    // Use this for initialization
+    void Start () {
         mainMenu = mainMenu.GetComponent<Canvas>();
         quitMenu = quitMenu.GetComponent<Canvas>();
         mainMenu.enabled = true;
@@ -20,6 +24,9 @@ public class MainMenuScript : MonoBehaviour {
         keybindMenu.enabled = false;
         HowTo.enabled = false;
 
+        sounds = GetComponents<AudioSource>();
+        talking = sounds[0];
+        talking.Play();
     }
 	
 	public void QuitPress()
